@@ -1,0 +1,1 @@
+# Testes Automatizados do Sistema de Agendamento de Fotografia

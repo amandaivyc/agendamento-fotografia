@@ -1,0 +1,4 @@
+1. Abra o MySQL Workbench
+2. Crie o schema `agendamento_fotografia`
+3. Execute o script `sql/schema.sql`
+4. Navegue até a pasta `backend` e execute: `mvn spring-boot:run`
