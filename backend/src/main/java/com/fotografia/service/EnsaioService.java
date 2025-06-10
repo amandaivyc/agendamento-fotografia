@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Service
 public class EnsaioService {
+
     @Autowired
     private EnsaioRepository repository;
 
@@ -25,14 +26,16 @@ public class EnsaioService {
         return repository.save(ensaio);
     }
 
-    public Ensaio atualizar(Long id, Ensaio novoEnsaio) {
-        Ensaio ensaio = repository.findById(id).orElseThrow(() -> new RuntimeException("Ensaio não encontrado"));
-        ensaio.setTitulo(novoEnsaio.getTitulo());
-        ensaio.setDescricao(novoEnsaio.getDescricao());
-        return repository.save(ensaio);
-    }
-
     public void deletar(Long id) {
         repository.deleteById(id);
+    }
+
+    public Ensaio atualizar(Long id, Ensaio novo) {
+        return repository.findById(id).map(e -> {
+            e.setNome(novo.getNome());
+            e.setDescricao(novo.getDescricao());
+            e.setPreco(novo.getPreco());
+            return repository.save(e);
+        }).orElseThrow(() -> new RuntimeException("Ensaio não encontrado"));
     }
 }

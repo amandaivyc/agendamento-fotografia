@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Service
 public class CampanhaService {
+
     @Autowired
     private CampanhaRepository repository;
 
@@ -25,14 +26,16 @@ public class CampanhaService {
         return repository.save(campanha);
     }
 
-    public Campanha atualizar(Long id, Campanha novaCampanha) {
-        Campanha campanha = repository.findById(id).orElseThrow(() -> new RuntimeException("Campanha não encontrada"));
-        campanha.setTitulo(novaCampanha.getTitulo());
-        campanha.setDescricao(novaCampanha.getDescricao());
-        return repository.save(campanha);
-    }
-
     public void deletar(Long id) {
         repository.deleteById(id);
+    }
+
+    public Campanha atualizar(Long id, Campanha novo) {
+        return repository.findById(id).map(c -> {
+            c.setTitulo(novo.getTitulo());
+            c.setDescricao(novo.getDescricao());
+            c.setAtiva(novo.isAtiva());
+            return repository.save(c);
+        }).orElseThrow(() -> new RuntimeException("Campanha não encontrada"));
     }
 }

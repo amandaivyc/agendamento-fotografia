@@ -1,3 +1,4 @@
+// service/AgendamentoService.java
 package com.fotografia.service;
 
 import com.fotografia.model.Agendamento;
@@ -10,6 +11,7 @@ import java.util.Optional;
 
 @Service
 public class AgendamentoService {
+
     @Autowired
     private AgendamentoRepository repository;
 
@@ -17,19 +19,15 @@ public class AgendamentoService {
         return repository.findAll();
     }
 
+    public List<Agendamento> listarPorClienteId(Long id) {
+        return repository.findByCliente_Id(id); // CORRETO
+    }
+
     public Optional<Agendamento> buscarPorId(Long id) {
         return repository.findById(id);
     }
 
     public Agendamento salvar(Agendamento agendamento) {
-        return repository.save(agendamento);
-    }
-
-    public Agendamento atualizar(Long id, Agendamento novoAgendamento) {
-        Agendamento agendamento = repository.findById(id).orElseThrow(() -> new RuntimeException("Agendamento não encontrado"));
-        agendamento.setDataHora(novoAgendamento.getDataHora());
-        agendamento.setCliente(novoAgendamento.getCliente());
-        agendamento.setEnsaio(novoAgendamento.getEnsaio());
         return repository.save(agendamento);
     }
 

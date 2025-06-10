@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/agendamentos")
+@RequestMapping("/agendamentos")
 public class AgendamentoController {
 
     @Autowired
@@ -17,6 +17,11 @@ public class AgendamentoController {
     @GetMapping
     public List<Agendamento> listarTodos() {
         return service.listarTodos();
+    }
+
+    @GetMapping("/usuario/{id}")
+    public List<Agendamento> listarPorUsuario(@PathVariable Long id) {
+        return service.listarPorClienteId(id);
     }
 
     @GetMapping("/{id}")
@@ -31,7 +36,8 @@ public class AgendamentoController {
 
     @PutMapping("/{id}")
     public Agendamento atualizar(@PathVariable Long id, @RequestBody Agendamento agendamento) {
-        return service.atualizar(id, agendamento);
+        agendamento.setId(id);
+        return service.salvar(agendamento);
     }
 
     @DeleteMapping("/{id}")
